@@ -8,5 +8,6 @@ menuRouter.get("/:id", menuController.getOne);
 menuRouter.post("/", menuController.create);
 menuRouter.put("/:id", menuController.updateOne);
 menuRouter.delete("/:id", menuController.deleteOne);
+menuRouter.get("/search", menuController.searchMenus);
 
 module.exports = menuRouter;
