@@ -45,6 +45,15 @@ const getOne = async (id) => {
   }
 };
 
+const create = async (body) => {
+  try {
+    const menuItem = await MenuItems.create(body);
+    return menuItem;
+  } catch (error) {
+    return error;
+  }
+};
+
 const updateOne = async (id, body) => {
   try {
     const menuItem = await MenuItems.findByIdAndUpdate(
@@ -57,13 +66,13 @@ const updateOne = async (id, body) => {
   }
 };
 
-const create = async (body) => {
+const deleteOne = async (id) => {
   try {
-    const menuItem = await MenuItems.create(body);
+    const menuItem = await MenuItems.deleteOne({ "_id": id });
     return menuItem;
   } catch (error) {
     return error;
   }
 };
 
-module.exports = { getAll, getOne, updateOne, create, MenuItems };
+module.exports = { getAll, getOne, create, updateOne, deleteOne, MenuItems };
