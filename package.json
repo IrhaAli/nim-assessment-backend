@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "preload": "node db/preload-db",
     "pretty": "prettier --write .",
-    "start": "node server.js"
+    "start": "nodemon ./server.js"
   },
   "keywords": [],
   "author": "",

@@ -18,8 +18,7 @@ const menuItemsSchema = new mongoose.Schema({
     type: String
   },
   updatedAt: {
-    type: Date,
-    default: Date.now
+    type: Date
   }
 });
 menuItemsSchema.set("toJSON", {
@@ -48,8 +47,7 @@ const getOne = async (id) => {
 
 const updateOne = async (id, body) => {
   try {
-    const menuItem = await MenuItems.findByIdAndUpdate(id, body);
-    console.log(menuItem);
+    const menuItem = await MenuItems.findByIdAndUpdate(id, {...body, updatedAt: Date.now()});
     return menuItem;
   } catch (error) {
     return error;
