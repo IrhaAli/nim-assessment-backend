@@ -75,4 +75,13 @@ const deleteOne = async (id) => {
   }
 };
 
-module.exports = { getAll, getOne, create, updateOne, deleteOne, MenuItems };
+const searchMenus = async (queryParams) => {
+  try {
+    const menuItems = await MenuItems.find(queryParams);
+    return menuItems;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAll, getOne, create, updateOne, deleteOne, searchMenus, MenuItems };
