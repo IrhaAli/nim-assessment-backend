@@ -24,6 +24,7 @@ const menuItemsSchema = new mongoose.Schema({
 menuItemsSchema.set("toJSON", {
   virtuals: true
 });
+
 // menu model
 const MenuItems = mongoose.model("MenuItems", menuItemsSchema);
 

@@ -20,7 +20,6 @@ describe("menuItems", () => {
   describe("getAll", () => {
     it("should return an array of menu items", async () => {
       const menuItems = await getAll();
-      console.log(menuItems.length);
       expect(menuItems).toBeInstanceOf(Array);
     });
   });
