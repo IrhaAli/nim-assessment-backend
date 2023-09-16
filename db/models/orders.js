@@ -80,8 +80,14 @@ const getByStatus = async (status) => {
   return orders;
 };
 
-const totalSales = async () => {
-  const orders = await getAll();
+const totalSales = async (queryParams) => {
+  const orders = await Order.find(queryParams ?
+    {
+      $and: [
+        { date: { $gte: new Date(queryParams.from) } },
+        { date: { $lte: new Date(queryParams.to) } }
+      ]
+    } : {}).populate("items.item");
   const totalSalesAmount = orders.reduce(
     (total, item) =>
       total + orderSchema.statics.calcTotal(item.items), 0)
