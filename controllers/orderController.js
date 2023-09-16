@@ -71,8 +71,8 @@ const totalSales = async (req, res) => {
   try {
     let queryParams = null;
     if (Object.keys(req.query).length > 0) {
-      const from = req.query.from.replaceAll("/", "-");
-      const to = req.query.to.replaceAll("/", "-");
+      const from = `${req.query.from.replaceAll("/", "-")}-01`;
+      const to = `${req.query.to.replaceAll("/", "-")}-31`;
       queryParams = {
         from, to
       }
@@ -87,7 +87,7 @@ const totalSales = async (req, res) => {
 
 const ordersByStatus = async (req, res) => {
   try {
-    const orders = await Order.ordersByStatus(req.query.s);
+    const orders = await Order.ordersByStatus((req.query.s) ? req.query : null);
     res.send(orders);
   } catch (error) {
     res.status(500).send(error);

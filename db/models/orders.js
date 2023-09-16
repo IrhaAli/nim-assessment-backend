@@ -83,10 +83,10 @@ const getByStatus = async (status) => {
 const totalSales = async (queryParams) => {
   const orders = await Order.find(queryParams ?
     {
-      $and: [
-        { date: { $gte: new Date(queryParams.from) } },
-        { date: { $lte: new Date(queryParams.to) } }
-      ]
+      createdAt: {
+        $gt: new Date(queryParams.from),
+        $lt: new Date(queryParams.to)
+      }
     } : {}).populate("items.item");
   const totalSalesAmount = orders.reduce(
     (total, item) =>
