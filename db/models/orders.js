@@ -94,6 +94,13 @@ const totalSales = async (queryParams) => {
   return totalSalesAmount;
 };
 
+const ordersByStatus = async (status) => {
+  const orders = await Order.find({
+    status
+  }).populate("items.item");
+  return orders;
+};
+
 
 module.exports = {
   getAll,
@@ -103,5 +110,6 @@ module.exports = {
   remove,
   getByStatus,
   totalSales,
+  ordersByStatus,
   Order
 };
