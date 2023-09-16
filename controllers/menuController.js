@@ -54,4 +54,5 @@ const searchMenus = async (req, res) => {
   }
 };
 
+
 module.exports = { getAll, getOne, create, updateOne, deleteOne, searchMenus };
