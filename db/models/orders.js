@@ -81,23 +81,15 @@ const getByStatus = async (status) => {
 };
 
 const totalSales = async (queryParams) => {
-  const orders = await Order.find(queryParams ?
-    {
-      createdAt: {
-        $gt: new Date(queryParams.from),
-        $lt: new Date(queryParams.to)
-      }
-    } : {}).populate("items.item");
+  const orders = await Order.find(queryParams).populate("items.item");
   const totalSalesAmount = orders.reduce(
     (total, item) =>
       total + orderSchema.statics.calcTotal(item.items), 0)
   return totalSalesAmount;
 };
 
-const ordersByStatus = async (status) => {
-  const orders = await Order.find({
-    status
-  }).populate("items.item");
+const ordersByStatus = async (queryParams) => {
+  const orders = await Order.find(queryParams).populate("items.item");
   return orders;
 };
 
