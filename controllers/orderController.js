@@ -69,13 +69,30 @@ const getByStatus = async (req, res) => {
 
 const totalSales = async (req, res) => {
   try {
-    const total = await Order.totalSales();
+    let queryParams = null;
+    if (Object.keys(req.query).length > 0) {
+      const from = `${req.query.from.replaceAll("/", "-")}-01`;
+      const to = `${req.query.to.replaceAll("/", "-")}-31`;
+      queryParams = {
+        from, to
+      }
+    }
+
+    const total = await Order.totalSales(queryParams);
     res.status(200).send({ total });
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
+const ordersByStatus = async (req, res) => {
+  try {
+    const orders = await Order.ordersByStatus((req.query.s) ? req.query : null);
+    res.send(orders);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 module.exports = {
   getAll,
@@ -85,5 +102,6 @@ module.exports = {
   remove,
   getByCustomer,
   getByStatus,
-  totalSales
+  totalSales,
+  ordersByStatus
 };

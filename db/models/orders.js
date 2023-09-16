@@ -80,12 +80,25 @@ const getByStatus = async (status) => {
   return orders;
 };
 
-const totalSales = async () => {
-  const orders = await getAll();
+const totalSales = async (queryParams) => {
+  const orders = await Order.find(queryParams ?
+    {
+      createdAt: {
+        $gt: new Date(queryParams.from),
+        $lt: new Date(queryParams.to)
+      }
+    } : {}).populate("items.item");
   const totalSalesAmount = orders.reduce(
     (total, item) =>
       total + orderSchema.statics.calcTotal(item.items), 0)
   return totalSalesAmount;
+};
+
+const ordersByStatus = async (status) => {
+  const orders = await Order.find({
+    status
+  }).populate("items.item");
+  return orders;
 };
 
 
@@ -97,5 +110,6 @@ module.exports = {
   remove,
   getByStatus,
   totalSales,
+  ordersByStatus,
   Order
 };

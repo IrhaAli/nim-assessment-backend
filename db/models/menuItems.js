@@ -77,7 +77,13 @@ const deleteOne = async (id) => {
 
 const searchMenus = async (queryParams) => {
   try {
-    const menuItems = await MenuItems.find(queryParams);
+    const caseInsensitive = new RegExp(queryParams, "i");
+    const menuItems = await MenuItems.find({
+      $or: [
+        { name: caseInsensitive },
+        { description: caseInsensitive }
+      ]
+    });
     return menuItems;
   } catch (error) {
     return error;
