@@ -84,7 +84,6 @@ describe("routes", () => {
     });
   });
 
-  // total sales route
   describe("GET /api/orders/total-sales", () => {
     it("should return the total sales and have the correct total", async () => {
       await Order.create(testOrder);
@@ -94,15 +93,40 @@ describe("routes", () => {
     });
   });
 
-  // order by status route
+  describe("GET /api/orders/total-sales?from=2023/01&to=2023/01", () => {
+    it("should return the total sales from January 2023 to December 2023", async () => {
+      await Order.create(testOrder);
+      const response = await request(server).get("/api/orders/total-sales?from=2023/01&to=2023/01");
+
+      expect(response.body).toBeInstanceOf(Object);
+      expect(response.body.total).toBe(0);
+    });
+  });
+
   describe("GET /api/orders/status?s=pending", () => {
     it("should return an array of orders with the correct status", async () => {
       await Order.create(testOrder);
       const response = await request(server).get(
         "/api/orders/status?s=pending"
       );
+
       expect(response.body).toBeInstanceOf(Array);
       expect(response.body[0].status).toBe("pending");
+    });
+  });
+
+  describe("GET /api/orders/status?s=pending?from=2023/01&to=2023/01", () => {
+    it("should return an array of orders with the correct status", async () => {
+      await Order.create(testOrder);
+      const response = await request(server).get(
+        "/api/orders/status?s=pending?from=2023/01&to=2023/01"
+      );
+      const response2 = await request(server).get(
+        "/api/orders/status?s=pending"
+      );
+
+      expect(response.body).toBeInstanceOf(Object);
+      expect(Object.keys(response.body).length).toBe(0);
     });
   });
 

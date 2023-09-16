@@ -69,12 +69,11 @@ const getByStatus = async (req, res) => {
 
 const totalSales = async (req, res) => {
   try {
-    let queryParams = null;
-    if (Object.keys(req.query).length > 0) {
-      const from = `${req.query.from.replaceAll("/", "-")}-01`;
-      const to = `${req.query.to.replaceAll("/", "-")}-31`;
-      queryParams = {
-        from, to
+    const queryParams = {};
+    if (Object.keys(req.query).length > 1) {
+      queryParams.createdAt = {
+        "$gt": new Date(`${req.query.from.replaceAll("/", "-")}-01`),
+        "$lt": new Date(`${req.query.to.replaceAll("/", "-")}-31`)
       }
     }
 
@@ -87,7 +86,15 @@ const totalSales = async (req, res) => {
 
 const ordersByStatus = async (req, res) => {
   try {
-    const orders = await Order.ordersByStatus((req.query.s) ? req.query : null);
+    const queryParams = (req.query.s) ? { status: req.query.s } : {};
+    if (Object.keys(req.query).length > 1) {
+      queryParams.createdAt = {
+        "$gt": new Date(`${req.query.from.replaceAll("/", "-")}-01`),
+        "$lt": new Date(`${req.query.to.replaceAll("/", "-")}-31`)
+      }
+    }
+
+    const orders = await Order.ordersByStatus(queryParams);
     res.send(orders);
   } catch (error) {
     res.status(500).send(error);
