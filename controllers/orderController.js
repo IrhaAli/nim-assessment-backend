@@ -72,9 +72,9 @@ const totalSales = async (req, res) => {
     const queryParams = {};
     if (Object.keys(req.query).length > 1) {
       queryParams.createdAt = {
-        "$gt": new Date(`${req.query.from.replaceAll("/", "-")}-01`),
-        "$lt": new Date(`${req.query.to.replaceAll("/", "-")}-31`)
-      }
+        $gt: new Date(`${req.query.from.replaceAll("/", "-")}-01`),
+        $lt: new Date(`${req.query.to.replaceAll("/", "-")}-31`)
+      };
     }
 
     const total = await Order.totalSales(queryParams);
@@ -86,12 +86,12 @@ const totalSales = async (req, res) => {
 
 const ordersByStatus = async (req, res) => {
   try {
-    const queryParams = (req.query.s) ? { status: req.query.s } : {};
+    const queryParams = req.query.s ? { status: req.query.s } : {};
     if (Object.keys(req.query).length > 1) {
       queryParams.createdAt = {
-        "$gt": new Date(`${req.query.from.replaceAll("/", "-")}-01`),
-        "$lt": new Date(`${req.query.to.replaceAll("/", "-")}-31`)
-      }
+        $gt: new Date(`${req.query.from.replaceAll("/", "-")}-01`),
+        $lt: new Date(`${req.query.to.replaceAll("/", "-")}-31`)
+      };
     }
 
     const orders = await Order.ordersByStatus(queryParams);

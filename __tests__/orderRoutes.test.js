@@ -96,7 +96,9 @@ describe("routes", () => {
   describe("GET /api/orders/total-sales?from=2023/01&to=2023/01", () => {
     it("should return the total sales from January 2023 to December 2023", async () => {
       await Order.create(testOrder);
-      const response = await request(server).get("/api/orders/total-sales?from=2023/01&to=2023/01");
+      const response = await request(server).get(
+        "/api/orders/total-sales?from=2023/01&to=2023/01"
+      );
 
       expect(response.body).toBeInstanceOf(Object);
       expect(response.body.total).toBe(0);

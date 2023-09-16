@@ -83,8 +83,9 @@ const getByStatus = async (status) => {
 const totalSales = async (queryParams) => {
   const orders = await Order.find(queryParams).populate("items.item");
   const totalSalesAmount = orders.reduce(
-    (total, item) =>
-      total + orderSchema.statics.calcTotal(item.items), 0)
+    (total, item) => total + orderSchema.statics.calcTotal(item.items),
+    0
+  );
   return totalSalesAmount;
 };
 
@@ -92,7 +93,6 @@ const ordersByStatus = async (queryParams) => {
   const orders = await Order.find(queryParams).populate("items.item");
   return orders;
 };
-
 
 module.exports = {
   getAll,
