@@ -39,7 +39,7 @@ const updateOne = async (req, res) => {
 const deleteOne = async (req, res) => {
   try {
     const menu = await MenuItems.deleteOne(req.params.id);
-    res.send((menu.deletedCount > 0) ? req.params.id : "None found");
+    res.send(menu.deletedCount > 0 ? req.params.id : "None found");
   } catch (error) {
     res.status(500).send(error);
   }
@@ -53,6 +53,5 @@ const searchMenus = async (req, res) => {
     res.status(500).send(error);
   }
 };
-
 
 module.exports = { getAll, getOne, create, updateOne, deleteOne, searchMenus };

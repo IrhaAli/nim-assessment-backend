@@ -24,6 +24,7 @@ const menuItemsSchema = new mongoose.Schema({
 menuItemsSchema.set("toJSON", {
   virtuals: true
 });
+
 // menu model
 const MenuItems = mongoose.model("MenuItems", menuItemsSchema);
 
@@ -59,7 +60,8 @@ const updateOne = async (id, body) => {
     const menuItem = await MenuItems.findByIdAndUpdate(
       id,
       { ...body, updatedAt: Date.now() },
-      { new: true });
+      { new: true }
+    );
     return menuItem;
   } catch (error) {
     return error;
@@ -68,7 +70,7 @@ const updateOne = async (id, body) => {
 
 const deleteOne = async (id) => {
   try {
-    const menuItem = await MenuItems.deleteOne({ "_id": id });
+    const menuItem = await MenuItems.deleteOne({ _id: id });
     return menuItem;
   } catch (error) {
     return error;
@@ -79,10 +81,7 @@ const searchMenus = async (queryParams) => {
   try {
     const caseInsensitive = new RegExp(queryParams, "i");
     const menuItems = await MenuItems.find({
-      $or: [
-        { name: caseInsensitive },
-        { description: caseInsensitive }
-      ]
+      $or: [{ name: caseInsensitive }, { description: caseInsensitive }]
     });
     return menuItems;
   } catch (error) {
@@ -90,5 +89,12 @@ const searchMenus = async (queryParams) => {
   }
 };
 
-
-module.exports = { getAll, getOne, create, updateOne, deleteOne, searchMenus, MenuItems };
+module.exports = {
+  getAll,
+  getOne,
+  create,
+  updateOne,
+  deleteOne,
+  searchMenus,
+  MenuItems
+};

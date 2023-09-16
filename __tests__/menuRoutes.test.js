@@ -58,8 +58,7 @@ describe("routes", () => {
   describe("PUT /api/menu/:id", () => {
     it("should update the updatedAt field", async () => {
       const menuItem = await MenuItems.create(testMenuItem);
-      const response = await request(server)
-        .put(`/api/menu/${menuItem._id}`);
+      const response = await request(server).put(`/api/menu/${menuItem._id}`);
       expect(response.body.updatedAt).not.toBe(menuItem.updatedAt);
     });
   });
@@ -74,10 +73,8 @@ describe("routes", () => {
     });
   });
 
-  // search /api/menu/search?q=chicken
   describe("GET /api/menu/search", () => {
     it("should return an array of menu items", async () => {
-      // create a menu item with the word "chicken" in the description
       await MenuItems.create(testMenuItem);
       const response = await request(server).get("/api/menu/search?q=chicken");
       expect(response.body).toBeInstanceOf(Array);
